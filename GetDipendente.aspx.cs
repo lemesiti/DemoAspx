@@ -21,11 +21,21 @@ namespace DemoAspx
 
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 DipendenteResponse dipendenteResponse = JsonConvert.DeserializeObject<DipendenteResponse>(jsonResponse);
-                Dipendente dipendente = dipendenteResponse.dipendente;
+                BaseResponse baseResponse = dipendenteResponse.baseResponse;
 
-                txtNome.Text = dipendente.nome;
-                txtCognome.Text = dipendente.cognome;
-                txtEta.Text = dipendente.eta.ToString();
+                try
+                {
+                    Dipendente dipendente = dipendenteResponse.dipendente;
+
+                    txtNome.Text = dipendente.nome;
+                    txtCognome.Text = dipendente.cognome;
+                    txtEta.Text = dipendente.eta.ToString();
+                }
+                catch (Exception ex)
+                {
+                    Response.Redirect("ErroreGenerico.aspx");
+                }
+                
                 
             }
         }

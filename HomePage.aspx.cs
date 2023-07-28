@@ -26,11 +26,19 @@ namespace DemoAspx
                 HttpResponseMessage response = await client.GetAsync(apiEndpoint);
 
                 if (response != null)
-                {
-                    string jsonResponse = await response.Content.ReadAsStringAsync();
-                    DipendentiResponse dipendentiResponse = JsonConvert.DeserializeObject<DipendentiResponse>(jsonResponse);
-                    gvEmployees.DataSource = dipendentiResponse.dipendenteList;
-                    gvEmployees.DataBind();
+                {   
+                    try
+                    {
+                        string jsonResponse = await response.Content.ReadAsStringAsync();
+                        DipendentiResponse dipendentiResponse = JsonConvert.DeserializeObject<DipendentiResponse>(jsonResponse);
+                        gvEmployees.DataSource = dipendentiResponse.dipendenteList;
+                        gvEmployees.DataBind();
+                    }
+                    catch(Exception ex)
+                    {
+                        Response.Redirect("ErroreGenerico.aspx");
+                    }
+                    
 
                 }
             }

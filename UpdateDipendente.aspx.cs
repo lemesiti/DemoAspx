@@ -53,8 +53,16 @@ namespace DemoAspx
 
             using (HttpClient client = new HttpClient())
             {
-                string apiEndpoint = "https://localhost:44321/updateDipendente?id=" + id;
-                HttpResponseMessage response = await client.PutAsync(apiEndpoint, new StringContent(jsonDipendente, Encoding.UTF8, "application/json"));
+                try
+                {
+                    string apiEndpoint = "https://localhost:44321/updateDipendente?id=" + id;
+                    HttpResponseMessage response = await client.PutAsync(apiEndpoint, new StringContent(jsonDipendente, Encoding.UTF8, "application/json"));
+                }
+                catch(Exception ex)
+                {
+                    Response.Redirect("ErroreGenerico.aspx");
+                }
+                
             }
             Response.Redirect("HomePage.aspx");
 

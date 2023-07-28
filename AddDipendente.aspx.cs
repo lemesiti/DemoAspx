@@ -30,7 +30,15 @@ namespace DemoAspx
 
             using (HttpClient client = new HttpClient())
             {
-                HttpResponseMessage response = await client.PostAsync(apiEndpoint, new StringContent(jsonDipendente, Encoding.UTF8, "application/json"));
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsync(apiEndpoint, new StringContent(jsonDipendente, Encoding.UTF8, "application/json"));
+                }
+                catch (Exception ex)
+                {
+                    Response.Redirect("ErroreGenerico.aspx");
+                }
+                
             }
             Response.Redirect("HomePage.aspx");
 

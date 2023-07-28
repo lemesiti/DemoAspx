@@ -19,9 +19,15 @@ namespace DemoAspx
         {
             using (HttpClient client = new HttpClient())
             {
-                string apiEndpoint = "https://localhost:44321/deleteDipendente?id=" + txtID.Text;
-                HttpResponseMessage response = await client.DeleteAsync(apiEndpoint);
-
+                try
+                {
+                    string apiEndpoint = "https://localhost:44321/deleteDipendente?id=" + txtID.Text;
+                    HttpResponseMessage response = await client.DeleteAsync(apiEndpoint);
+                }
+                catch (Exception ex)
+                {
+                    Response.Redirect("ErroreGenerico.aspx");
+                }
                 Response.Redirect("HomePage.aspx");
             }
         }
